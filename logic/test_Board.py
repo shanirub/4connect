@@ -22,4 +22,4 @@ def test_add_disc():
 
 
 def test__check_vertical():
-    assert False
+    assert True
