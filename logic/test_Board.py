@@ -35,4 +35,11 @@ def test_add_disc():
 
 
 def test__check_vertical():
-    assert True
+    b = Board()
+    player = 1
+    assert b.add_disc(player, 0)
+    assert b.add_disc(player, 0)
+    assert b.add_disc(player, 0)
+    assert b._check_vertical(1, 0, 3) is False
+    assert b.add_disc(player, 0)
+    assert b._check_vertical(1, 0, 2)
