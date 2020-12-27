@@ -43,3 +43,29 @@ def test__check_vertical():
     assert b._check_vertical(1, 0, 3) is False
     assert b.add_disc(player, 0)
     assert b._check_vertical(1, 0, 2)
+
+
+def test__check_horizontal():
+    b = Board()
+    player = 1
+    assert b._check_horizontal(player, 3, 5) is False
+    assert b.add_disc(player, 0)
+    assert b.add_disc(player, 1)
+    assert b._check_horizontal(player, 1, 5) is False
+    assert b.add_disc(player, 2)
+    assert b.add_disc(player, 3)
+    assert b._check_horizontal(player, 3, 5)
+    player = 2
+    assert b.add_disc(player, 0)
+    assert b.add_disc(player, 1)
+    assert b._check_horizontal(player, 1, 4) is False
+    assert b.add_disc(player, 2)
+    assert b.add_disc(player, 3)
+    assert b._check_horizontal(player, 3, 4)
+    b1 = Board()
+    assert b1._check_horizontal(player, 3, 5) is False
+    assert b1.add_disc(player, 6)
+    assert b1.add_disc(player, 5)
+    assert b1.add_disc(player, 4)
+    assert b1.add_disc(player, 3)
+    assert b1._check_horizontal(player, 3, 5)
