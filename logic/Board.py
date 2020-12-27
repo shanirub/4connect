@@ -47,10 +47,11 @@ class Board():
 
     def has_won(self, player, current_col, current_row):
         # check for last added disc
-        return False
+        return self._check_vertical(self, player, current_col, current_row)
 
-    def _check_horizontal(self):
-        pass
+    def _check_horizontal(self, player, current_col, current_row):
+        tmp = self.grid[current_row]
+        return tmp[:current_col] == [player] * 3 or tmp[current_col:] == [player] * 4
 
     def _check_vertical(self, player, current_col, current_row):
         if current_row >= 2:  # no point in checking, when there are less than 4 discs in the column
