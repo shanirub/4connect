@@ -89,3 +89,7 @@ def test__check_diagonal_right():
     assert b._check_diagonal_right(player, 1, 3)
     assert b._check_diagonal_right(player, 2, 4)
     assert b._check_diagonal_right(player, 3, 5)
+
+
+def test__check_diagonal_left():
+    assert False
