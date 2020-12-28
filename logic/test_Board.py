@@ -17,6 +17,7 @@ def test_is_col_full():
 
 def test_has_won():
     assert True
+    # helfer methods tested below
 
 
 def test_add_disc():
@@ -74,6 +75,10 @@ def test__check_horizontal():
 def test__check_diagonal_right():
     b = Board()
     player = 1
+    assert b._check_diagonal_right(player, 0, 2) is False
+    assert b._check_diagonal_right(player, 1, 3) is False
+    assert b._check_diagonal_right(player, 2, 4) is False
+    assert b._check_diagonal_right(player, 3, 5) is False
     assert b.add_disc(player, 0)
     assert b.add_disc(player, 0)
     assert b.add_disc(player, 0)
@@ -89,3 +94,27 @@ def test__check_diagonal_right():
     assert b._check_diagonal_right(player, 1, 3)
     assert b._check_diagonal_right(player, 2, 4)
     assert b._check_diagonal_right(player, 3, 5)
+
+
+def test__check_diagonal_left():
+    b = Board()
+    player = 1
+    assert b._check_diagonal_left(player, 3, 2) is False
+    assert b._check_diagonal_left(player, 2, 3) is False
+    assert b._check_diagonal_left(player, 1, 4) is False
+    assert b._check_diagonal_left(player, 0, 5) is False
+    assert b.add_disc(player, 3)
+    assert b.add_disc(player, 3)
+    assert b.add_disc(player, 3)
+    assert b.add_disc(player, 2)
+    assert b.add_disc(player, 2)
+    assert b.add_disc(player, 1)
+    player = 2
+    assert b.add_disc(player, 3)
+    assert b.add_disc(player, 2)
+    assert b.add_disc(player, 1)
+    assert b.add_disc(player, 0)
+    assert b._check_diagonal_left(player, 3, 2)
+    assert b._check_diagonal_left(player, 2, 3)
+    assert b._check_diagonal_left(player, 1, 4)
+    assert b._check_diagonal_left(player, 0, 5)

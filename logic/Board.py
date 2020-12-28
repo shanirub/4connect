@@ -47,7 +47,10 @@ class Board():
 
     def has_won(self, player, current_col, current_row):
         # check for last added disc
-        return self._check_vertical(self, player, current_col, current_row)
+        return self._check_vertical(player, current_col, current_row) or \
+               self._check_horizontal(player, current_col, current_row) or \
+               self._check_diagonal_right(player, current_col, current_row) or \
+               self._check_diagonal_left(player, current_col, current_row)
 
     def _check_horizontal(self, player, current_col, current_row):
         tmp = self.grid[current_row]
@@ -77,5 +80,19 @@ class Board():
         else:
             return True
 
-    def _check_diagonal_left(self):
-        pass
+    def _check_diagonal_left(self, player, current_col, current_row):
+        sublist_left_down = [self.grid[current_row + i][current_col - i]
+                             for i in range(min(self.NUM_OF_COLS - current_col, self.NUM_OF_ROWS - current_row))]
+        sublist_right_up = [self.grid[current_row - i][current_col + i]
+                            for i in range(max(current_col + 1, current_row - 1))]
+
+        # sublist_left_down reverse, take out last element (to avoid duplicates)
+        sublist_left_down.reverse()
+        sublist_left_down.pop()
+        # join both sublists and save them as a string
+        tmpstr = ''.join(str(x) for x in sublist_left_down + sublist_right_up)
+        # search for the winning sequence in the string
+        if tmpstr.find(str(player) * 4) == -1:
+            return False
+        else:
+            return True
