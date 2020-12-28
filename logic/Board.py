@@ -70,7 +70,7 @@ class Board():
         sublist_left_up.reverse()
         sublist_left_up.pop()
         # join both sublists and save them as a string
-        tmpstr = ''.join(str(x) for x in [sublist_left_up + sublist_right_down])
+        tmpstr = ''.join(str(x) for x in sublist_left_up + sublist_right_down)
         # search for the winning sequence in the string
         if tmpstr.find(str(player) * 4) == -1:
             return False
