@@ -49,7 +49,8 @@ class Board():
         # check for last added disc
         return self._check_vertical(player, current_col, current_row) or \
                self._check_horizontal(player, current_col, current_row) or \
-               self._check_diagonal_right(player, current_col, current_row)
+               self._check_diagonal_right(player, current_col, current_row) or \
+               self._check_diagonal_left(player, current_col, current_row)
 
     def _check_horizontal(self, player, current_col, current_row):
         tmp = self.grid[current_row]
@@ -83,7 +84,7 @@ class Board():
         sublist_left_down = [self.grid[current_row + i][current_col - i]
                              for i in range(min(self.NUM_OF_COLS - current_col, self.NUM_OF_ROWS - current_row))]
         sublist_right_up = [self.grid[current_row - i][current_col + i]
-                            for i in range(min(current_col + 1, current_row + 1))]
+                            for i in range(max(current_col + 1, current_row - 1))]
 
         # sublist_left_down reverse, take out last element (to avoid duplicates)
         sublist_left_down.reverse()
