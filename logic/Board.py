@@ -1,9 +1,9 @@
 class Board():
     def __init__(self):
         # grid init
-        NUM_OF_ROWS = 6
-        NUM_OF_COLS = 7
-        self.grid = [[0] * NUM_OF_COLS for _ in range(NUM_OF_ROWS)]
+        self.NUM_OF_ROWS = 6
+        self.NUM_OF_COLS = 7
+        self.grid = [[0] * self.NUM_OF_COLS for _ in range(self.NUM_OF_ROWS)]
 
     def add_disc(self, player, col):
         """
@@ -60,8 +60,22 @@ class Board():
 
         return False
 
-    def _check_diagonal_right(self):
-        pass
+    def _check_diagonal_right(self, player, current_col, current_row):  # diagonal right down, left up
+        sublist_right_down = [self.grid[current_row + i][current_col + i]
+                              for i in range(min(self.NUM_OF_COLS - current_col, self.NUM_OF_ROWS - current_row))]
+        sublist_left_up = [self.grid[current_row - i][current_col - i]
+                           for i in range(min(current_col + 1, current_row + 1))]
+
+        # sublist_left_up reverse, take out last element (to avoid duplicates)
+        sublist_left_up.reverse()
+        sublist_left_up.pop()
+        # join both sublists and save them as a string
+        tmpstr = ''.join(str(x) for x in [sublist_left_up + sublist_right_down])
+        # search for the winning sequence in the string
+        if tmpstr.find(str(player) * 4) == -1:
+            return False
+        else:
+            return True
 
     def _check_diagonal_left(self):
         pass

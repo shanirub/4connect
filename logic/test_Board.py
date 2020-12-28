@@ -69,3 +69,7 @@ def test__check_horizontal():
     assert b1.add_disc(player, 4)
     assert b1.add_disc(player, 3)
     assert b1._check_horizontal(player, 3, 5)
+
+
+def test__check_diagonal_right():
+    assert False
