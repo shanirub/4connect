@@ -5,6 +5,10 @@ class Board():
         self.NUM_OF_COLS = 7
         self.grid = [[0] * self.NUM_OF_COLS for _ in range(self.NUM_OF_ROWS)]
 
+    def __repr__(self):
+        repr_str = '\n'.join([str(row) for row in self.grid])
+        return repr_str
+
     def add_disc(self, player, col):
         """
         Adds a new disc to the grid.
