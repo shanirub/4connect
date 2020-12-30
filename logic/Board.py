@@ -4,6 +4,8 @@ class Board():
         self.NUM_OF_ROWS = 6
         self.NUM_OF_COLS = 7
         self.grid = [[0] * self.NUM_OF_COLS for _ in range(self.NUM_OF_ROWS)]
+        self.current_col = 0
+        self.current_row = 0
 
     def __repr__(self):
         repr_str = '\n'.join([str(row) for row in self.grid])
@@ -30,6 +32,8 @@ class Board():
                 i -= 1
 
             self.grid[i][col] = player
+            self.current_row = i
+            self.current_col = col
             return True
         else:
             return False
