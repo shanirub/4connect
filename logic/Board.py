@@ -73,13 +73,16 @@ class Board():
 
     def _check_diagonal_right(self, player, current_col, current_row):  # diagonal right down, left up
         sublist_right_down = [self.grid[current_row + i][current_col + i]
-                              for i in range(min(self.NUM_OF_COLS - current_col, self.NUM_OF_ROWS - current_row))]
-        sublist_left_up = [self.grid[current_row - i][current_col - i]
-                           for i in range(min(current_col + 1, current_row + 1))]
+                              for i in range(max(self.NUM_OF_ROWS, self.NUM_OF_COLS))
+                              if current_row + i < self.NUM_OF_ROWS and current_col + i < self.NUM_OF_COLS]
 
-        # sublist_left_up reverse, take out last element (to avoid duplicates)
+        sublist_left_up = [self.grid[current_row - i][current_col - i]
+                           for i in range(1, max(self.NUM_OF_ROWS, self.NUM_OF_COLS))
+                           # range start at 1 not 0 to avoid duplicates
+                           if current_row - i >= 0 and current_col - i >= 0]
+
+        # sublist_left_up reverse
         sublist_left_up.reverse()
-        sublist_left_up.pop()
         # join both sublists and save them as a string
         tmpstr = ''.join(str(x) for x in sublist_left_up + sublist_right_down)
         # search for the winning sequence in the string
@@ -90,13 +93,16 @@ class Board():
 
     def _check_diagonal_left(self, player, current_col, current_row):
         sublist_left_down = [self.grid[current_row + i][current_col - i]
-                             for i in range(min(self.NUM_OF_COLS - current_col, self.NUM_OF_ROWS - current_row))]
-        sublist_right_up = [self.grid[current_row - i][current_col + i]
-                            for i in range(max(current_col + 1, current_row - 1))]
+                             for i in range(max(self.NUM_OF_ROWS, self.NUM_OF_COLS))
+                             if current_row + i < self.NUM_OF_ROWS and current_col - i >= 0]
 
-        # sublist_left_down reverse, take out last element (to avoid duplicates)
+        sublist_right_up = [self.grid[current_row - i][current_col + i]
+                            for i in range(1, max(self.NUM_OF_ROWS, self.NUM_OF_COLS))
+                            # range start at 1 not 0 to avoid duplicates
+                            if current_row - i >= 0 and current_col + i < self.NUM_OF_COLS]
+
+        # sublist_left_down reverse
         sublist_left_down.reverse()
-        sublist_left_down.pop()
         # join both sublists and save them as a string
         tmpstr = ''.join(str(x) for x in sublist_left_down + sublist_right_up)
         # search for the winning sequence in the string
