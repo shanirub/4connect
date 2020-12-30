@@ -38,7 +38,7 @@ class Game():
 
             valid_input_condition = False
 
-        self._announce_win()
+        self._announce_win(player)
 
     def _announce_win(self, player):
         print("The winner is player " + str(player) + "!")
