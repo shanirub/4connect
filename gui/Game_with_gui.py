@@ -75,9 +75,11 @@ class GameWithGui:
         # self.screen.blit(label, (40, 10))
         pygame.time.wait(5000)
 
-
     def draw_grid(self, grid):
         # print(self.b.__repr__())
+        for i in range(7):
+            text = self.myfont.render(str(i), True, pygame.Color("White"), pygame.Color("Black"))
+            self.screen.blit(text, (100 * i, 0))
         for row in range(self.b.NUM_OF_ROWS):
             for col in range(self.b.NUM_OF_COLS):
                 pygame.draw.rect(self.screen, pygame.Color('Black'), (col * self.SQUARE_SIZE, row * self.SQUARE_SIZE,
