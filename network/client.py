@@ -1,10 +1,13 @@
 import socketio
+import asyncio
+import aiohttp
 
-sio = socketio.AsyncClient()
+loop = asyncio.get_event_loop()
+sio = socketio.AsyncClient(logger=True, engineio_logger=True)
 
 
 @sio.event
-def connect():
+async def connect():
     print('connection established')
 
 
@@ -15,12 +18,15 @@ def my_message(data):
 
 
 @sio.event
-def disconnect():
+async def disconnect():
     print('disconnected from server')
 
 
-async def con():
+async def start_server():
     await sio.connect('http://localhost:5000')
+    await sio.wait()
 
 if __name__ == '__main__':
-    con()
+    loop.run_until_complete(start_server())
+
+
