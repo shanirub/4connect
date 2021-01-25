@@ -1,5 +1,7 @@
+'''
+for testing: playing game local: 2 players together, text version
+'''
 from logic.Board import Board
-
 
 class Game():
     def __init__(self):

@@ -1,3 +1,7 @@
+'''
+for testing: playing game local: 2 players together, gui version
+'''
+
 from logic.Board import Board
 import pygame
 
@@ -21,7 +25,7 @@ class GameWithGui:
         self.draw_grid(self.b.grid)
         pygame.display.update()
 
-    def play(self):
+    async def play(self):
         player = 1  # first player
         has_won_condition = False
         valid_input_condition = False
