@@ -47,7 +47,7 @@ class ClientLogic:
                     pygame.draw.circle(self.screen, pygame.Color('Blue'),
                                        (col * self.SQUARE_SIZE + 50, row * self.SQUARE_SIZE + 50), self.RADIUS_SIZE)
 
-    def read_move(self):
+    async def read_move(self):
         global move
         pygame.display.update()
         is_quit_or_keydown_event = False
@@ -63,6 +63,6 @@ class ClientLogic:
 
 ## testing
 
-c = ClientLogic()
-c.read_move
+# c = ClientLogic()
+# c.read_move
 

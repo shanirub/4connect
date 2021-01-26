@@ -3,7 +3,9 @@ import socketio
 import asyncio
 import aiohttp
 from logic.client_logic import ClientLogic
+import logging
 
+logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 loop = asyncio.get_event_loop()
 sio = socketio.AsyncClient(logger=True, engineio_logger=True)
 c = ClientLogic()
@@ -39,17 +41,22 @@ async def start_server():
     # 3. wait for input - only one move
     # 4. send move to server
     # 5. goto 1
-    await sio.wait()
+    # await sio.wait()
+    move = await c.read_move()
+    logging.info("move assigned")
+    print(move)
 
 
-async def my_background_task(my_argument):
-    # do some background work here!
-    c.read_move()
+#async def my_background_task():
+#    logging.info("inside my background task")
+#    move = await c.read_move()
+#    logging.info("move assigned")
+#    print(move)
 
 
 if __name__ == '__main__':
     loop.run_until_complete(start_server())
-    sio.start_background_task(my_background_task)
+    # sio.start_background_task(my_background_task)
 
 
 
