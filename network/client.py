@@ -4,6 +4,7 @@ import asyncio
 import aiohttp
 from logic.client_logic import ClientLogic
 import logging
+from logic.config import ClientOpCodes
 
 logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 loop = asyncio.get_event_loop()
@@ -44,7 +45,22 @@ async def start_server():
     # await sio.wait()
     move = await c.read_move()
     logging.info("move assigned")
+
+    request = {}
+
+    if move.type == pygame.QUIT:
+        request['op'] = ClientOpCodes.QUIT.value
+    elif move.type == pygame.KEYDOWN:
+        request['op'] = ClientOpCodes.KEYDOWN.value
+        request['key'] = move.key
+
+    await sio.sleep(1.0)
+    await sio.emit('request', request)
+    await sio.sleep(1.0)
+
     print(move)
+
+    await sio.sleep(5.0)
 
 
 #async def my_background_task():
