@@ -1,3 +1,7 @@
+'''
+game logic basic
+'''
+
 class Board():
     def __init__(self):
         # grid init
