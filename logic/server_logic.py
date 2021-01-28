@@ -37,7 +37,7 @@ class ServerLogic:
                         reply['op'] = ServerOpCodes.USER_WON
                     else:
                         reply['op'] = ServerOpCodes.UPDATE_GRID
-                        reply['grid'] = self.b.grid
+                        # reply['grid'] = self.b.grid
                 else:
                     reply['op'] = ServerOpCodes.COL_FULL
             else:

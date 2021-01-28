@@ -18,9 +18,10 @@ async def connect(sid, environ):
     print("clients: ")
     print(clients)
     await sio.emit("welcome", room=clients[0])
+    # if length(client) == 2 --> announce_turn
 
 @sio.event
-async def request(sid, data):
+async def move(sid, data):
     # function's name = first argument in emit by client.py
     # sid = client id
     # data = event's data
@@ -30,6 +31,10 @@ async def request(sid, data):
     logging.info(data)
     player_id = clients.index(sid) + 1
     logging.info("player id: " + str(player_id))
+    # repeat until legal input
+    # if quit than announce_endgame()
+    # update grid
+    # if win situation than announce_endgame()
     reply = await sl.generate_reply(player_id, data)
     logging.info("reply from logic module")
     logging.info(reply)

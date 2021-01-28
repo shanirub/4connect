@@ -55,7 +55,7 @@ async def start_server():
         request['key'] = move.key
 
     await sio.sleep(1.0)
-    await sio.emit('request', request)
+    await sio.emit('move', request)
     await sio.sleep(1.0)
 
     print(move)
