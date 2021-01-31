@@ -26,26 +26,21 @@ class ServerLogic:
         logging.info("from player id:")
         logging.info(player_id)
 
-
-        reply = {}
-
         if not request_data['op'] == pygame.QUIT:
             if self._is_valid_keydown(request_data):
                 disc_added = self.b.add_disc(player_id, request_data['key'] - 48)
                 if disc_added:
                     if self.b.has_won(player_id, self.b.current_col, self.b.current_row):
-                        reply['op'] = ServerOpCodes.USER_WON
+                        return ServerOpCodes.USER_WON
                     else:
-                        reply['op'] = ServerOpCodes.UPDATE_GRID
-                        # reply['grid'] = self.b.grid
+                        return ServerOpCodes.LEGAL_MOVE
                 else:
-                    reply['op'] = ServerOpCodes.COL_FULL
+                    return ServerOpCodes.COL_FULL
             else:
-                reply['op'] = ServerOpCodes.ILLEGAL_INPUT
+                return ServerOpCodes.ILLEGAL_INPUT
         else:
-            reply['op'] = ServerOpCodes.GAME_ENDED
+            return ServerOpCodes.GAME_ENDED
 
-        return reply
 
     def _is_valid_keydown(self, request_data):
         return 48 <= request_data['key'] <= 54

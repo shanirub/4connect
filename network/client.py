@@ -17,6 +17,8 @@ async def connect():
     print('connection established')
 
 
+
+
 @sio.event
 def my_message(data):
     print('message received with ', data)
@@ -24,7 +26,6 @@ def my_message(data):
     pygame.event.wait()
     event = pygame.event.get()[0]
     if event.type == pygame.QUIT:
-        # Close the program any way you want, or troll users who want to close your program.
         raise SystemExit
     else:
         sio.emit('my response', {'response': event})
@@ -35,19 +36,18 @@ async def disconnect():
     print('disconnected from server')
 
 
-async def start_server():
+async def start_client():
+
+    # waiting for connection
     await sio.connect('http://localhost:5000')
-    # 1. wait for opcode from server
-    # 2. print something
-    # 3. wait for input - only one move
-    # 4. send move to server
-    # 5. goto 1
-    # await sio.wait()
+
+    # waiting for my turn
     move = await c.read_move()
     logging.info("move assigned")
 
     request = {}
 
+    # waiting for legal input
     if move.type == pygame.QUIT:
         request['op'] = ClientOpCodes.QUIT.value
     elif move.type == pygame.KEYDOWN:
@@ -57,22 +57,12 @@ async def start_server():
     await sio.sleep(1.0)
     await sio.emit('move', request)
     await sio.sleep(1.0)
-
-    print(move)
+    logging.info(str(move))
 
     await sio.sleep(5.0)
 
-
-#async def my_background_task():
-#    logging.info("inside my background task")
-#    move = await c.read_move()
-#    logging.info("move assigned")
-#    print(move)
-
-
 if __name__ == '__main__':
-    loop.run_until_complete(start_server())
-    # sio.start_background_task(my_background_task)
+    loop.run_until_complete(start_client())
 
 
 
