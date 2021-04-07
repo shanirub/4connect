@@ -1,3 +1,6 @@
+'''
+i thought keeping track of all the constants in one config file would look more professional
+'''
 from enum import Enum
 
 
@@ -16,4 +19,5 @@ class ServerOpCodes(Enum):
     COL_FULL = 6
     WAITING_FOR_MOVE = 7
     LEGAL_MOVE = 8
+    WAITING_FOR_SECONDE_PLAYER = 9
 

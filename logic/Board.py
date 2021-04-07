@@ -1,5 +1,5 @@
 '''
-game logic basic
+Game logic.
 '''
 
 class Board():

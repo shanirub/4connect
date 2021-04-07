@@ -3,7 +3,7 @@ server side logic:
 should check incoming requests ($move, $player),
 and return: 1. error message if request is illegal OR
             2. win / lose message OR
-            3. updated grid
+            3. updated grid (for both clients/players)
 
 ints instead of constants no no no
 '''

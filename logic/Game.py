@@ -1,5 +1,8 @@
 '''
-for testing: playing game local: 2 players together, text version
+Game class for testing
+
+2 local players on one computer, text mode
+
 '''
 from logic.Board import Board
 

@@ -1,3 +1,11 @@
+'''
+Server module - should run only once on the server
+
+handles networking
+logic in server_logic.py
+'''
+
+
 from enum import Enum
 import socketio
 import uvicorn
@@ -21,6 +29,8 @@ async def connect(sid, environ):
     # starting a game when there are two players
     if len(clients) == 2:
         await sio.emit(ServerOpCodes.WAITING_FOR_MOVE, to=clients[0])
+    elif len(clients) == 1:
+        await sio.emit(ServerOpCodes.WAITING_FOR_SECONDE_PLAYER, to=clients[0])
 
 @sio.on(ClientOpCodes.MOVE)
 async def move(sid, data):
