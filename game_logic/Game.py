@@ -4,7 +4,7 @@ Game class for testing
 2 local players on one computer, text mode
 
 '''
-from logic.Board import Board
+from game_logic.Board import Board
 
 class Game():
     def __init__(self):

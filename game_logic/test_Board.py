@@ -1,4 +1,4 @@
-from logic.Board import Board
+from game_logic.Board import Board
 
 
 def test_is_col_full():

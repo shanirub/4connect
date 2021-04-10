@@ -1,5 +1,5 @@
 '''
-server side logic:
+server side game_logic:
 should check incoming requests ($move, $player),
 and return: 1. error message if request is illegal OR
             2. win / lose message OR
@@ -8,8 +8,8 @@ and return: 1. error message if request is illegal OR
 ints instead of constants no no no
 '''
 
-from logic.Board import Board
-from logic.config import ServerOpCodes
+from game_logic.Board import Board
+from game_logic.config import ServerOpCodes
 import logging
 import pygame
 

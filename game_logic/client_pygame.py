@@ -1,11 +1,11 @@
 '''
-client side logic:
+client side game_logic:
 should only 1. draw the grid 2. read a move from the player
 '''
 
 import pygame
 import logging
-from logic.Board import Board
+from game_logic.Board import Board
 
 class ClientLogic:
     def __init__(self):

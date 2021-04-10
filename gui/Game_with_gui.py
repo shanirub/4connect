@@ -2,7 +2,7 @@
 for testing: playing game local: 2 players together, gui version
 '''
 
-from logic.Board import Board
+from game_logic.Board import Board
 import pygame
 
 

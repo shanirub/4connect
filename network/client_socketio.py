@@ -2,16 +2,16 @@
 Client module - each player should run this from his computer
 
 handles networking
-logic in client_logic.py
+game_logic in client_pygame.py
 '''
 
 import pygame
 import socketio
 import asyncio
 import aiohttp
-from logic.client_logic import ClientLogic
+from game_logic.client_pygame import ClientLogic
 import logging
-from logic.config import ClientOpCodes, ServerOpCodes
+from game_logic.config import ClientOpCodes, ServerOpCodes
 
 logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 loop = asyncio.get_event_loop()

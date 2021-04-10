@@ -2,7 +2,7 @@
 Server module - should run only once on the server
 
 handles networking
-logic in server_logic.py
+game_logic in server_logic.py
 '''
 
 
@@ -10,8 +10,8 @@ from enum import Enum
 import socketio
 import uvicorn
 import logging
-from logic.server_logic import ServerLogic
-from logic.config import ClientOpCodes, ServerOpCodes
+from game_logic.server_logic import ServerLogic
+from game_logic.config import ClientOpCodes, ServerOpCodes
 
 sio = socketio.AsyncServer(async_mode='asgi')
 app = socketio.ASGIApp(sio)
@@ -41,7 +41,7 @@ async def move(sid, data):
     logging.info("player id: " + str(player_id))
 
     reply = await sl.generate_reply(player_id, data)
-    logging.info("reply from logic module")
+    logging.info("reply from game_logic module")
     logging.info(str(reply))
 
     await sio.emit(reply, to=sid)
