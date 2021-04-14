@@ -5,34 +5,6 @@ handling the thread responsible for the pygame
 '''
 
 
-import zmq
-import pygame
-from game_logic.config import PYGAME_THREAD_NAME
-from pygame.locals import *
-
-# Prepare context and sockets
-context = zmq.Context()
-t1 = context.socket(zmq.PAIR)
-t1.connect("inproc://" + PYGAME_THREAD_NAME)
-
-pygame.init()
-POLL_SOCKET = USEREVENT + 1
-pygame.time.set_timer(POLL_SOCKET, 100)
-data = ''
-while '99' not in data:
-    for event in pygame.event.get():
-        if event.type == POLL_SOCKET:
-            try:
-                data = peer2.recv(zmq.NOBLOCK)
-                peer2.send('')
-                print(data)
-            except zmq.ZMQError:
-                continue
-
-
-
-
-### old stuff needs to be merge
 import pygame
 import logging
 from game_logic.Board import Board
