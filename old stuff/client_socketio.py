@@ -1,22 +1,32 @@
 '''
-Client module - each player should run this from his computer
+client_socketio.py
 
-handles networking
-game_logic in client_pygame.py
+handling the thread responsible for the socketio
 '''
 
 import pygame
 import socketio
 import asyncio
 import aiohttp
-from game_logic.client_pygame import ClientLogic
+# from game_logic.client_pygame import ClientLogic
 import logging
 from game_logic.config import ClientOpCodes, ServerOpCodes
+import zmq
+from game_logic.config import SOCKETIO_THREAD_NAME
 
 logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
+
+
+# Prepare context and sockets
+# connection with thread 1 (main thread)
+context = zmq.Context()
+t1 = context.socket(zmq.PAIR)
+t1.connect("inproc://" + SOCKETIO_THREAD_NAME)
+
+# connection with server (socketio)
 loop = asyncio.get_event_loop()
 sio = socketio.AsyncClient(logger=True, engineio_logger=True)
-c = ClientLogic()
+# c = ClientLogic()
 
 
 async def reading_new_move():
@@ -89,25 +99,18 @@ async def inform_loss():
     raise SystemExit
 
 
-
-# @sio.event
-# def my_message(data):
-#     print('message received with ', data)
-#
-#     pygame.event.wait()
-#     event = pygame.event.get()[0]
-#     if event.type == pygame.QUIT:
-#         raise SystemExit
-#     else:
-#         sio.emit('my response', {'response': event})
-#
-
 @sio.event
 async def disconnect():
     print('disconnected from server')
 
 
 async def start_client():
+    try:
+        data = t1.recv(zmq.NOBLOCK)
+        t1.send('')
+        print(data)
+    except zmq.ZMQError:
+        print("")
 
     # waiting for connection
     await sio.connect('http://localhost:5000')

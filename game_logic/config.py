@@ -3,6 +3,8 @@ i thought keeping track of all the constants in one config file would look more 
 '''
 from enum import Enum
 
+PYGAME_THREAD_NAME = "pygame"
+SOCKETIO_THREAD_NAME = "socketio"
 
 class ClientOpCodes(Enum):
     QUIT = 1
