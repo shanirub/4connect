@@ -1,7 +1,5 @@
 import logging
 import threading
-from time import sleep
-
 import pygame
 from pygame.locals import *
 from game_logic.config import PYGAME_THREAD_NAME, SOCKETIO_THREAD_NAME
@@ -23,17 +21,21 @@ def pygame_thread(context=None):    # t2
     is_gameover = False
     while not is_gameover:
         for event in pygame.event.get():
-            if event.type == POLL_SOCKET:
+            if event.type == POLL_SOCKET:   # message from main thread T1
                 try:
-                    # TODO check messages from main thread
+                    # TODO check messages from main thread:
+                    # TODO 1. draw board (c object)
+                    # TODO 2. error message
                     data = t1.recv(zmq.NOBLOCK)
                     t1.send('')
                     print(data)
                 except zmq.ZMQError:
                     continue
             elif event.type == pygame.QUIT or event.type == pygame.KEYDOWN:
+                # only relevant events
                 print(event)
-                # TODO send to c object to analyse move and react accordingly
+                t1.send_json({"event_type": event.type})
+                # TODO send to main thread (then server) analyse move and react accordingly
             else:
                 pass
 
@@ -90,7 +92,8 @@ if __name__ == "__main__":
     #     x = t2_socket.recv()
     #     print(x)
     while True:
-        pass
+        x = t2_socket.recv_json()
+        print(x)
 
     for thread in threads:
         thread.join()

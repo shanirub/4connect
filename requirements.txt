@@ -2,3 +2,4 @@ pygame~=2.0.1
 python-socketio
 aiohttp~=3.7.3
 uvicorn~=0.13.3
+pyzmq~=22.0.3
