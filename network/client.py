@@ -24,7 +24,7 @@ def pygame_thread(context=None):    # t2
             if event.type == POLL_SOCKET:   # message from main thread T1
                 try:
                     # TODO check messages from main thread:
-                    # TODO 1. draw board (c object)
+                    # TODO 1. draw board (c object) __OR__
                     # TODO 2. error message
                     data = t1.recv(zmq.NOBLOCK)
                     t1.send('')
@@ -34,6 +34,7 @@ def pygame_thread(context=None):    # t2
             elif event.type == pygame.QUIT or event.type == pygame.KEYDOWN:
                 # only relevant events
                 print(event)
+                # t1.send(b"")
                 t1.send_json({"event_type": event.type})
                 # TODO send to main thread (then server) analyse move and react accordingly
             else:
@@ -50,8 +51,6 @@ def socketio_thread(context=None):  # t3
         x = t1.recv_json()
         print(x)
         t1.send(b"yes from socketio")
-
-
 
 
 if __name__ == "__main__":
@@ -80,20 +79,20 @@ if __name__ == "__main__":
     t3_socket.connect("inproc://" + SOCKETIO_THREAD_NAME)
     logging.info("Main    : binding succeeded")
 
-    # for i in range(10):
-    #     logging.info("sending n to t3")
-    #     sleep(2)
-    #     t3_socket.send_json({"n":i})
-    #     x = t3_socket.recv()
-    #     print(x)
-    #
-    #     logging.info("sending n to t2")
-    #     t2_socket.send_json({"n":i})
-    #     x = t2_socket.recv()
-    #     print(x)
-    while True:
-        x = t2_socket.recv_json()
-        print(x)
+    should_exit = False
+
+    while not should_exit:
+        # TODO: 1. recv t3 socketio
+        socketio_message = t3_socket.recv()
+
+        # TODO: 2. send t2 pygame
+        t2_socket.send(socketio_message)
+
+        # TODO: 3. recv t2 pygame
+        pygame_answer = t2_socket.recv()
+
+        # TODO: 4. send t3 socketio
+        t3_socket.send(pygame_answer)
 
     for thread in threads:
         thread.join()
