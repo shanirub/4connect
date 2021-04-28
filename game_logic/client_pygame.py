@@ -49,19 +49,24 @@ class ClientLogic:
                     pygame.draw.circle(self.screen, pygame.Color('Blue'),
                                        (col * self.SQUARE_SIZE + 50, row * self.SQUARE_SIZE + 50), self.RADIUS_SIZE)
 
-    async def read_move(self):
-        global move
-        pygame.display.update()
-        is_quit_or_keydown_event = False
+    def handle_reply(self):
+        pass
+        # check ServerOpCode
 
-        while not is_quit_or_keydown_event:
-            move = pygame.event.wait()
-            logging.info("read event: ")
-            logging.info(move)
-            if move.type == pygame.KEYDOWN or move.type == pygame.QUIT:
-                is_quit_or_keydown_event = True
 
-        return move
+    # async def read_move(self):
+    #     global move
+    #     pygame.display.update()
+    #     is_quit_or_keydown_event = False
+    #
+    #     while not is_quit_or_keydown_event:
+    #         move = pygame.event.wait()
+    #         logging.info("read event: ")
+    #         logging.info(move)
+    #         if move.type == pygame.KEYDOWN or move.type == pygame.QUIT:
+    #             is_quit_or_keydown_event = True
+    #
+    #     return move
 
 ## testing
 

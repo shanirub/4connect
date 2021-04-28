@@ -8,7 +8,7 @@ SOCKETIO_THREAD_NAME = "socketio"
 
 class ClientOpCodes(Enum):
     QUIT = 1
-    KEYDOWN = 2
+#    KEYDOWN = 2
     MOVE = 3
 
 

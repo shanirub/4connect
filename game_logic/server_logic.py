@@ -41,7 +41,6 @@ class ServerLogic:
         else:
             return ServerOpCodes.GAME_ENDED
 
-
     def _is_valid_keydown(self, request_data):
         return 48 <= request_data['key'] <= 54
 

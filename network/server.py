@@ -19,6 +19,7 @@ sl = ServerLogic()
 
 clients = []
 
+
 @sio.event
 async def connect(sid, environ):
     print("connect ", sid)
@@ -26,11 +27,13 @@ async def connect(sid, environ):
     print("clients: ")
     print(clients)
     await sio.emit("welcome", room=clients[0])
-    # starting a game when there are two players
+    # starting a game when there are two players. 1st Player begins
     if len(clients) == 2:
         await sio.emit(ServerOpCodes.WAITING_FOR_MOVE, to=clients[0])
+    # if there is only one player, wait for second
     elif len(clients) == 1:
         await sio.emit(ServerOpCodes.WAITING_FOR_SECONDE_PLAYER, to=clients[0])
+
 
 @sio.on(ClientOpCodes.MOVE)
 async def move(sid, data):
@@ -61,6 +64,7 @@ async def move(sid, data):
 @sio.event
 def disconnect(sid):
     print('disconnect ', sid)
+
 
 async def update_grid():
     reply = {'op': ServerOpCodes.UPDATE_GRID, 'grid':sl.b.grid}
